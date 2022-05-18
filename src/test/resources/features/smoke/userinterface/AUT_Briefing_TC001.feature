@@ -6,11 +6,11 @@ Feature: Import a briefing file
   Background:
     Given Preparation steps of TC001
 
-#  @BriefingImport
-#  Scenario: The user imports file successfully
-#    When upload correct csv
-#    Then should see the success message "Import briefing gelukt. Klik op het"
-#    And should be redirected to a page title "Briefings"
+  @BriefingImport
+  Scenario: The user imports file successfully
+    When upload correct csv
+    Then should see the success message "Import briefing gelukt. Klik op het"
+    And should be redirected to a page title "Briefings"
 
   Scenario: The user be informed with an error message in case of any other files than csv
     When upload different file than csv
