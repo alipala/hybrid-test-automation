@@ -9,7 +9,9 @@
 6. [Test Environment and Tech Stack](#6-test-environment-and-tech-stack)
 
 ## 1. Introduction
-This repository is about acceptance automated tests of an application for UI and backend parts.
+This repository is a demonstration to show how I develop a hybrid framework. Used test automation patterns 
+for creating acceptance automated tests of an application for UI and backend.
+It cannot be built unless you adapt the environment and page objects. 
 It stores the smoke tests so that seeing the apps are good enough for the further testing. It consists of a minimal set of tests run 
 on each build to test apps' functionalities. In simple terms, we are verifying whether 
 the important features are working and there are no showstoppers in the build that is under testing.

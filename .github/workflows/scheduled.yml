@@ -59,8 +59,8 @@ jobs:
           JIRA_URL: ${{ secrets.JIRA_URL }}
           JIRA_USER_NAME: ${{ secrets.JIRA_USER_NAME }}
           JIRA_PASSWORD: ${{ secrets.JIRA_PASSWORD }}
-          AIS_LOGIN_USER: ${{ secrets.AIS_LOGIN_USER }}
-          AIS_LOGIN_PASSWORD: ${{ secrets.AIS_LOGIN_PASSWORD }}
+          AIS_LOGIN_USER: ${{ secrets.LOGIN_USER }}
+          AIS_LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
         id: runtest
         run: mvn install -e -Dwebdriver.chrome.driver=$HOME/bin --file pom.xml -Denvironment=acc
 
@@ -102,14 +102,14 @@ jobs:
         if: needs.Test.result == 'success'
         uses: dawidd6/action-send-mail@v3.6.0
         with:
-          server_address: ${{ secrets.AH_SERVER_ADDRESS }}
-          server_port: ${{ secrets.AH_SERVER_PORT }}
+          server_address: ${{ secrets.SERVER_ADDRESS }}
+          server_port: ${{ secrets.SERVER_PORT }}
           subject: Automated Test Results - Scheduled Run
-          to: ${{ secrets.AH_RED_TEAM_MAIL }}
+          to: ${{ secrets.TEAM_MAIL }}
           from: Red Team
           secure: false
           body: The tests run automatically for ACC. Please find the Daiy Test Report in attached file!
-          reply_to: ${{ secrets.AH_MAIL_REPLY_TO }}
+          reply_to: ${{ secrets.MAIL_REPLY_TO }}
           ignore_cert: true
           convert_markdown: true
           attachments: ./serenity-summary.html
@@ -120,14 +120,14 @@ jobs:
         if: needs.Test.result == 'failure'
         uses: dawidd6/action-send-mail@v3.6.0
         with:
-          server_address: ${{ secrets.AH_SERVER_ADDRESS }}
-          server_port: ${{ secrets.AH_SERVER_PORT }}
+          server_address: ${{ secrets.SERVER_ADDRESS }}
+          server_port: ${{ secrets.SERVER_PORT }}
           subject: Automated Test Results - Scheduled Run
-          to: ${{ secrets.AH_RED_TEAM_MAIL }}
+          to: ${{ secrets.TEAM_MAIL }}
           from: Red Team
           secure: false
           body: No test run for ${{ github.event.inputs.choice }} because there is a problem on pipeline. Please check the logs here ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          reply_to: ${{ secrets.AH_MAIL_REPLY_TO }}
+          reply_to: ${{ secrets.MAIL_REPLY_TO }}
           ignore_cert: true
           convert_markdown: true
           priority: high

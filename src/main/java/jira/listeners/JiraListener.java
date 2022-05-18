@@ -42,7 +42,7 @@ public class JiraListener implements ConcurrentEventListener {
 
             // Decide to component of tests whether Outsystems or Oracle
             if (featurePath.contains("userinterface")) {
-                components = "Outsystems";
+                components = "UI";
 
             } else if (featurePath.contains("database")) {
                 components = "Oracle";

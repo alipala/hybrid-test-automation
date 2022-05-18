@@ -14,12 +14,7 @@ This test plan describes required test activities
 This test suite is related critical functionalities, pages and page elements.
 
 ## 3. Tested Features
-It can be tracked the tested feature via the link below.
-[Find Tests via Link](https://jira-eu-aholddelhaize.atlassian.net/projects/CRFC?selectedItem=com.thed.zephyr.je__test-cases) OR
-[Search Tests with Filter](https://jira-eu-aholddelhaize.atlassian.net/issues/?jql=project%3DCRFC%20AND%20issueType%3DTEST%20AND%20assignee%20in%20(61ae23f0fe9f300068f52255)%20ORDER%20BY%20created%20DESC)
-
-> ![Tests](https://github.com/RoyalAholdDelhaize/commerce-red-testautomation/blob/master/docs/test_cases.png?raw=true)
-
+Features for the application used in AH
 
 ## 4. Test Type
 It is a functional UI testing which each feature is tested as E2E. There is no dependency between tests!

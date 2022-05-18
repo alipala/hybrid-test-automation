@@ -23,8 +23,8 @@ public class JiraServiceProvider {
     public static final String JIRA_URL = System.getenv("JIRA_URL");
     public static final String PASSWORD = System.getenv("JIRA_PASSWORD");
     public static final String USER = System.getenv("JIRA_USER_NAME");
-    private static final String PROJECT = "CRFC";
-    private static final String JQL_BASE_QUERY = "project = \"CRFC\" and type IN (Bug) and summary ~ \"";
+    private static final String PROJECT = "JIRA_PROJECT";
+    private static final String JQL_BASE_QUERY = "project = \"JIRA_PROJECT\" and type IN (Bug) and summary ~ \"";
     private static final String BUILD_TEST = "Take into build";
 
     /**
@@ -66,7 +66,7 @@ public class JiraServiceProvider {
             fluentCreate.field(Field.PRIORITY, Field.valueByName(String.valueOf(Priority.MINOR)));
             fluentCreate.field("customfield_13301", Field.valueById(String.valueOf(PortfolioLane.MAINTENANCE)));
             fluentCreate.field(Field.COMPONENTS, new ArrayList() {{add(component);}});
-            fluentCreate.field("customfield_10013", Field.valueById(String.valueOf(Teams.TEAM_ROOD)));
+            fluentCreate.field("customfield_10013", Field.valueById(String.valueOf(Teams.TEAM_NAME)));
             Issue newIssue = fluentCreate.execute();
             newIssue.addComment(comment);
 

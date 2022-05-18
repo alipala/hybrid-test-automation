@@ -8,8 +8,7 @@ package jira;
 
 public enum Teams {
     // Add other teams based on Jira Rest API IDs
-    // For example, Team Rood id is 10819
-    TEAM_ROOD("10819");
+    TEAM_NAME("10819");
 
     private final String teamName;
 
