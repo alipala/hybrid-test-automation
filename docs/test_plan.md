@@ -10,7 +10,7 @@
 This test plan describes required test activities
 
 ## 2. Test Objects
-[AIS](https://outsystems-commerce-tst.ah.nl/AIS/) is a web application that handles item changes as published by suppliers.
+It is a web application that handles item changes as published by suppliers.
 This test suite is related critical functionalities, pages and page elements.
 
 ## 3. Tested Features
