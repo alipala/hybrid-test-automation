@@ -1,0 +1,158 @@
+name: Scheduled Run
+on:
+  schedule:
+    - cron: '0 5 * * 1-5'
+jobs:
+  Test:
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        id: jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          check-latest: true
+
+      # Setup maven because the test project is a maven project
+      - name: Setup Maven
+        id: maven
+        uses: stCarolas/setup-maven@v4.2
+        with:
+          maven-version: '3.8.4'
+
+      # Cache the maven packages to make the run fast
+      - name: Cache the Maven packages
+        id: cache_maven
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Install the latest Chrome driver
+      - name: Setup Chromedriver
+        id: chromedriver
+        run: |
+          cat /etc/os-release
+          sudo apt-get -y update
+          sudo apt-get -y install libnspr4 libnss3 libxcb1
+          sudo apt-get install -y fastjar
+          export CHROME_VERSION=$(curl --fail --max-time 10 --retry 10 https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip -o chromedriver.zip -s
+          jar xvf chromedriver.zip
+          sudo mv chromedriver $HOME/bin
+          chmod 755 $HOME/bin
+          chmod +x $HOME/bin
+          export PATH=$PATH:/$HOME/bin/chromedriver
+
+      # Install the latest Chrome browser
+      - name: Setup Chrome Browser
+        id: chromebrowser
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y ./google-chrome-stable_current_amd64.deb -f
+
+      - name: Run Tests
+        env: # lookup key as an environment variable
+          JIRA_URL: ${{ secrets.JIRA_URL }}
+          JIRA_USER_NAME: ${{ secrets.JIRA_USER_NAME }}
+          JIRA_PASSWORD: ${{ secrets.JIRA_PASSWORD }}
+          AIS_LOGIN_USER: ${{ secrets.AIS_LOGIN_USER }}
+          AIS_LOGIN_PASSWORD: ${{ secrets.AIS_LOGIN_PASSWORD }}
+        id: runtest
+        run: mvn install -e -Dwebdriver.chrome.driver=$HOME/bin --file pom.xml -Denvironment=acc
+
+      # After tests run, upload the Single Page Report to the artifactory
+      - name: Single Page Report
+        if: always()
+        id: singlepagereport
+        uses: actions/upload-artifact@v3
+        with:
+          name: single_page_report
+          path: ${{ github.workspace }}/target/site/serenity/serenity-summary.html
+      #          if-no-files-found: error
+
+      - name: Upload Full Test Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Full Report
+          path: ${{ github.workspace }}/target/site/serenity
+
+  Report:
+    if: always()
+    needs: Test
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: single_page_report
+        continue-on-error: true
+
+      - name: Test artifact download
+        run: ls -R
+        continue-on-error: true
+
+      # If there is no problem send the mail to all stakeholders
+      - name: Send Email With Report
+        if: needs.Test.result == 'success'
+        uses: dawidd6/action-send-mail@v3.6.0
+        with:
+          server_address: ${{ secrets.AH_SERVER_ADDRESS }}
+          server_port: ${{ secrets.AH_SERVER_PORT }}
+          subject: Automated Test Results - Scheduled Run
+          to: ${{ secrets.AH_RED_TEAM_MAIL }}
+          from: Red Team
+          secure: false
+          body: The tests run automatically for ACC. Please find the Daiy Test Report in attached file!
+          reply_to: ${{ secrets.AH_MAIL_REPLY_TO }}
+          ignore_cert: true
+          convert_markdown: true
+          attachments: ./serenity-summary.html
+          priority: normal
+
+      # If a problem happens send the mail to only developers
+      - name: Send Email Without Report
+        if: needs.Test.result == 'failure'
+        uses: dawidd6/action-send-mail@v3.6.0
+        with:
+          server_address: ${{ secrets.AH_SERVER_ADDRESS }}
+          server_port: ${{ secrets.AH_SERVER_PORT }}
+          subject: Automated Test Results - Scheduled Run
+          to: ${{ secrets.AH_RED_TEAM_MAIL }}
+          from: Red Team
+          secure: false
+          body: No test run for ${{ github.event.inputs.choice }} because there is a problem on pipeline. Please check the logs here ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          reply_to: ${{ secrets.AH_MAIL_REPLY_TO }}
+          ignore_cert: true
+          convert_markdown: true
+          priority: high
+
+  Notify:
+    if: always()
+    needs: Test
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+    - name: Send MSTeams Notifications
+      if: needs.Test.result == 'failure'
+      uses: jdcargile/ms-teams-notification@v1.3
+      with:
+        github-token: ${{ github.token }} # this will use the runner's token.
+        ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        notification-summary: Test Results Failed - Automated
+        notification-color: ff2424
+        timezone: Europe/Amsterdam
+
+    - name: Send MSTeams Notifications
+      if: needs.Test.result == 'success'
+      uses: jdcargile/ms-teams-notification@v1.3
+      with:
+        github-token: ${{ github.token }} # this will use the runner's token.
+        ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        notification-summary: Test Results Passed - Automated
+        notification-color: 52ff52
+        timezone: Europe/Amsterdam

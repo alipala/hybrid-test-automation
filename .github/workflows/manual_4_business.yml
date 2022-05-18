@@ -1,0 +1,104 @@
+# This is the workflow that is manually triggered
+
+name: Manual Run Business
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        description: 'Test environment'
+        required: true
+        default: 'tst'
+
+jobs:
+  Test:
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Maven
+        uses: stCarolas/setup-maven@v4.2
+        with:
+          maven-version: '3.8.4'
+
+      - name: Cache the Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Setup Chromedriver
+        run: |
+          cat /etc/os-release
+          sudo apt-get -y update
+          sudo apt-get -y install libnspr4 libnss3 libxcb1
+          export CHROME_VERSION=$(curl --fail --retry 10 https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip -o chromedriver.zip -s
+          unzip chromedriver.zip
+          sudo mv chromedriver $HOME/bin
+          chmod 755 $HOME/bin
+          chmod +x $HOME/bin
+          export PATH=$PATH:/$HOME/bin/chromedriver
+
+      - name: Setup Chrome Browser
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y ./google-chrome-stable_current_amd64.deb -f
+
+      - name: Run Tests
+        run: mvn clean verify -Dwebdriver.chrome.driver=$HOME/bin --file pom.xml -Denvironment=${{ github.event.inputs.name }}
+
+      - name: Upload Single Page Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Single Page Report
+          path: ${{ github.workspace }}/target/site/serenity/serenity-summary.html
+
+      - name: Send Email
+        if: always()
+        uses: dawidd6/action-send-mail@v3.6.0
+        with:
+          server_address: ${{ secrets.AH_SERVER_ADDRESS }}
+          server_port: ${{ secrets.AH_SERVER_PORT }}
+          subject: Automated Test Results - Manual Run
+          to: ${{ secrets.AH_BUSINESS_MAIL }}
+          from: Red Team
+          secure: false
+          body: The tests run by business team manually for ${{ github.event.inputs.name }} environment. Please find the Test Report in attached file!
+          reply_to: ${{ secrets.AH_MAIL_REPLY_TO }}
+          ignore_cert: true
+          convert_markdown: true
+          attachments: ./target/site/serenity/serenity-summary.html
+          priority: normal
+
+  Notify:
+    if: always()
+    needs: Test
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+      - name: Send MSTeams Notifications
+        if: needs.Test.result == 'failure'
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }} # this will use the runner's token.
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: Test Results Failed - Manual Run
+          notification-color: ff2424
+          timezone: Europe/Amsterdam
+
+      - name: Send MSTeams Notifications
+        if: needs.Test.result == 'success'
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }} # this will use the runner's token.
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: Test Results Passed - Manual Run
+          notification-color: 52ff52
+          timezone: Europe/Amsterdam
