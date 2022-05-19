@@ -96,7 +96,7 @@ jobs:
   Report:
     if: always()
     needs: Test
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: ubuntu-22.04
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v3
