@@ -16,17 +16,12 @@ import java.sql.SQLException;
 public final class ConnectionProvider {
 
     public static Connection conn = null;
-    public static String URL = "jdbc:oracle:thin:tsu_super_user/tsu_super_user@(DESCRIPTION=(CONNECT_TIMEOUT=10)\n" +
-            "(ADDRESS_LIST=(ADDRESS=(HOST=aras0001.ah.nl)(PORT=1540)(PROTOCOL=tcp)))(CONNECT_DATA=(SID=aras0001)))";
-    public static final String DB_URL1 = "jdbc:oracle:thin:@//aras0001.ah.nl:1540/aras0001";
-    public static final String DB_PASSWORD = "tsu_super_user";
-    public static final String DB_USER ="tsu_super_user";
 
     // This fields for CI/CD
-//    public static final String DB_URL = System.getenv("DATABASE_URL");
-//    public static final String DB_PASSWORD = System.getenv("DATABASE_PASSWORD");
-//    public static final String DB_USER = System.getenv("DATABASE_USER_NAME");
-//    static String url = "jdbc:oracle:thin:tsu_super_user/tsu_super_user@(DESCRIPTION=(CONNECT_TIMEOUT=10)(ADDRESS_LIST=(ADDRESS=(HOST=aras0001.ah.nl)(PORT=1540)(PROTOCOL=tcp)))(CONNECT_DATA=(SID=aras0001)))";
+    public static final String DB_URL = System.getenv("DATABASE_URL");
+    public static final String DB_PASSWORD = System.getenv("DATABASE_PASSWORD");
+    public static final String DB_USER = System.getenv("DATABASE_USER_NAME");
+
 
     /**
      * This class provides Oracle DB Connection
@@ -38,7 +33,7 @@ public final class ConnectionProvider {
         try {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 
-            conn = DriverManager.getConnection(URL);
+            conn = DriverManager.getConnection(DB_URL, DB_PASSWORD, DB_USER);
             if (conn != null) {
                 System.out.println("Connected to DB");
             }

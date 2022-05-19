@@ -23,7 +23,7 @@ on:
 # It also starts to install JDK before tests
 jobs:
   Test:
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
