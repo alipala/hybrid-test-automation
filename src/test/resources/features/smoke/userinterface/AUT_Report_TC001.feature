@@ -9,6 +9,6 @@ Feature: Download AIS Report
   Scenario: The user downloads AIS report
     Given go to AIS Rapport page
     When download
-    Then should see an excel file name contains "AIS Monitor datestamp" downloaded
-    And should see the "Gisteren&Oudere" sheet fulfilled
+    Then should see an excel file name contains "Masked message1" downloaded
+    And should see the "Masked message2" sheet fulfilled
 

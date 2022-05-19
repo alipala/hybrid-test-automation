@@ -13,7 +13,7 @@ Feature: Trigger different timers
     When try to trigger a "<Timer>" manually
     Then should see a started "<Popup>"
     Examples:
-      |  Timer                                          |  Popup                                                                     |
-      |  Bijwerken temperatuur zones                    |  Temperatuurzones bijwerken is gestart. Dit duurt ca. 10 sec.              |
-      |  Bijwerken leveringscondities                   |  Leveringscondities bijwerken is gestart. Dit duurt ca. 10 sec.            |
-      |  Bijwerken palletsoorten                        |  Palletsoorten bijwerken is gestart. Dit duurt ca. 10 sec.                 |
+      |  Timer                                          |  Popup                 |
+      |  Masked_timer_function1                         |  Masked_popup_message1 |
+      |  Masked_timer_function2                         |  Masked_popup_message2 |
+      |  Masked_timer_function3                         |  Masked_popup_message3 |

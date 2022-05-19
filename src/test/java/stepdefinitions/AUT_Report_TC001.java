@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static aut.menu.Items.MONITOR;
-import static aut.menu.SubItems.AIS_RAPPORT;
+import static aut.menu.SubItems.REPORT;
 import static aut.utilities.Utilities.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,7 +45,7 @@ public class AUT_Report_TC001 {
     @Given("go to AIS Rapport page")
     public void go_to_ais_rapport_page() {
         topMenu.item(MONITOR);
-        topMenu.subItem(AIS_RAPPORT);
+        topMenu.subItem(REPORT);
     }
 
     @When("download")

@@ -15,7 +15,7 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
 import static aut.menu.Items.BRIEFINGS;
-import static aut.menu.SubItems.IMPORTEREN;
+import static aut.menu.SubItems.IMPORT;
 import static aut.utilities.Utilities.TEST_DATA_DIR;
 
 /**
@@ -52,7 +52,7 @@ public class AUT_Briefing_TC001 {
         login.pageUrl();
         login.as(User.STANDARD_USER);
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(IMPORTEREN);
+        topMenu.subItem(IMPORT);
     }
 
     @When("upload different file than csv")

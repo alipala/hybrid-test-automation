@@ -1,11 +1,11 @@
 package aut.menu;
 
 public enum SubItems {
-    IMPORTEREN("Importeren"),
-    AIS_RAPPORT("AIS Rapport"),
-    BATCH_FUNCTIES("Batchfuncties (NASA/DP)"),
-    OVERZICHT("Overzicht"),
-    DOCUMENT_TYPEN("Document Typen");
+    IMPORT("Import"),
+    REPORT("AUT Report"),
+    BATCHES("Batch funstions"),
+    OVERVIEW("Overview"),
+    DOCUMENT_TYPE("Document Type");
 
     private final String subMenuItem;
 

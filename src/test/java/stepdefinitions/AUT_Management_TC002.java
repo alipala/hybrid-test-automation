@@ -15,7 +15,7 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
 import static aut.menu.Items.BEHEER;
-import static aut.menu.SubItems.BATCH_FUNCTIES;
+import static aut.menu.SubItems.BATCHES;
 
 public class AUT_Management_TC002 {
 
@@ -43,7 +43,7 @@ public class AUT_Management_TC002 {
     @Given("go to Timer page")
     public void go_to_timer_page() {
         topMenu.item(BEHEER);
-        topMenu.subItem(BATCH_FUNCTIES);
+        topMenu.subItem(BATCHES);
     }
 
     @When("try to trigger a {string} manually")

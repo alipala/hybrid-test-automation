@@ -15,7 +15,7 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
 import static aut.menu.Items.BRIEFINGS;
-import static aut.menu.SubItems.OVERZICHT;
+import static aut.menu.SubItems.OVERVIEW;
 
 public class AUT_Briefing_TC003 {
 
@@ -36,7 +36,7 @@ public class AUT_Briefing_TC003 {
         login.pageUrl();
         login.as(User.STANDARD_USER);
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(OVERZICHT);
+        topMenu.subItem(OVERVIEW);
     }
 
     @When("pick a failed import")

@@ -17,7 +17,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 
 import static aut.menu.Items.BRIEFINGS;
-import static aut.menu.SubItems.IMPORTEREN;
+import static aut.menu.SubItems.IMPORT;
 
 public class AUT_Briefing_TC002 {
 
@@ -43,7 +43,7 @@ public class AUT_Briefing_TC002 {
         login.pageUrl();
         login.as(User.STANDARD_USER);
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(IMPORTEREN);
+        topMenu.subItem(IMPORT);
     }
 
     @When("I upload correct csv file")
@@ -63,17 +63,18 @@ public class AUT_Briefing_TC002 {
 
     @Then("I should see the status icons are tick in all lines")
     public void i_should_see_the_status_icons_are_tick_in_all_lines() {
+        // TODO: will be Implemented
 
     }
 
     @When("I upload correct csv file with invalid data")
     public void i_upload_correct_csv_file_with_invalid_data() {
-
+        // TODO: will be Implemented
     }
 
     @Then("I should see the status icons are exclamation mark in some lines")
     public void i_should_see_the_status_icons_are_exclamation_mark_in_some_lines() {
-
+        // TODO: will be Implemented
     }
 
 }

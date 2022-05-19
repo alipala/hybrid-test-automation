@@ -26,7 +26,7 @@ public class DB_TC001_INSERT_DATA {
     @When("run the insert into query")
     public void run_the_insert_into_query() throws SQLException {
         stmt = conn.createStatement();
-        resultSet = stmt.executeQuery("SELECT * FROM L0COLLI where omschr = 'steenbreek'");
+        resultSet = stmt.executeQuery("SELECT * FROM MASKED_TABLE where masked_condition = 'masked_data'");
     }
 
     @Then("should see the results of select operation")

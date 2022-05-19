@@ -18,7 +18,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 
 import static aut.menu.Items.BRIEFINGS;
-import static aut.menu.SubItems.OVERZICHT;
+import static aut.menu.SubItems.OVERVIEW;
 import static aut.utilities.Utilities.TEST_DATA_DIR;
 import static aut.utilities.Utilities.waitFor;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,7 +52,7 @@ public class AUT_Packshot_TC001 {
     @When("open the packshot detail popup")
     public void open_the_packshot_detail_popup() {
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(OVERZICHT);
+        topMenu.subItem(OVERVIEW);
         briefing.pickSelectMenuAndItsOption(select_status, "Open");
         waitFor(2000);
         briefing.openBriefingDetail();
@@ -72,7 +72,7 @@ public class AUT_Packshot_TC001 {
     @When("disable the foto of the artikel")
     public void disable_the_foto_of_the_artikel() {
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(OVERZICHT);
+        topMenu.subItem(OVERVIEW);
         briefing.pickSelectMenuAndItsOption(select_status, "Open");
         waitFor(2000);
         briefing.openBriefingDetail();

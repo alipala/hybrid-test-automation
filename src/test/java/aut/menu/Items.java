@@ -2,7 +2,7 @@ package aut.menu;
 
 public enum Items {
     BRIEFINGS("Briefings"),
-    DATAWIJZIGINGEN("Datawijzigingen"),
+    DATACHANGE("Datachange"),
     CONTACT("Contact"),
     MONITOR("Monitor"),
     BEHEER("Beheer");

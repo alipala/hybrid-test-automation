@@ -1,12 +1,12 @@
 package aut.fbl;
 
 import aut.briefing.BriefingOverview;
-import stepdefinitions.AUT_FBL_TC001;
 import net.serenitybdd.core.pages.WebElementState;
 import net.serenitybdd.core.steps.UIInteractionSteps;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import stepdefinitions.AUT_FBL_TC002;
 
 /**
  * Feedback Loop Action class mainly contains the steps are declared using
@@ -30,8 +30,8 @@ public class FBLActions extends UIInteractionSteps {
         // Try to search until contact moment button found
         while(true) {
             if ($(briefing.contactMomentButton(contactType)).isCurrentlyVisible()) {
-                WebElement ele = AUT_FBL_TC001.driver.findElement(briefing.contactMomentButton(contactType));
-                JavascriptExecutor jse = (JavascriptExecutor) AUT_FBL_TC001.driver;
+                WebElement ele = AUT_FBL_TC002.driver.findElement(briefing.contactMomentButton(contactType));
+                JavascriptExecutor jse = (JavascriptExecutor) AUT_FBL_TC002.driver;
                 jse.executeScript("arguments[0].click()", ele);
                 break;
             } else {

@@ -15,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 
 import static aut.fbl.ContactMoment.FIRST_CONTACT_SUCCESS;
 import static aut.menu.Items.BRIEFINGS;
-import static aut.menu.SubItems.OVERZICHT;
+import static aut.menu.SubItems.OVERVIEW;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AUT_FBL_TC002 {
@@ -23,7 +23,7 @@ public class AUT_FBL_TC002 {
     public static final String select_status = "Column1_wtCmb_Status";
 
     @Managed
-    WebDriver driver;
+    public static WebDriver driver;
 
     @Steps
     LoginActions login;
@@ -42,7 +42,7 @@ public class AUT_FBL_TC002 {
         login.pageUrl();
         login.as(User.STANDARD_USER);
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(OVERZICHT);
+        topMenu.subItem(OVERVIEW);
     }
 
     @When("enter to blue envelope of a briefing")

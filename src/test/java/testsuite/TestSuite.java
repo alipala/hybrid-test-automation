@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        plugin = {"pretty", "jira.listeners.JiraListener"},
+        plugin = {"pretty", "jira.listeners.JiraListener", "json:target/cucumber/results.json"},
         features = {"src/test/resources/features/smoke"},
         glue = "stepdefinitions"
 )

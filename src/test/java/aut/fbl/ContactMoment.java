@@ -1,11 +1,12 @@
 package aut.fbl;
 
 public enum ContactMoment {
-        FIRST_CONTACT("Maak contactmomenten"),
-        FIRST_CONTACT_SUCCESS("Eerste contactmomenten succesvol verzonden"),
-        SECOND_CONTACT("Maak tweede contactmomenten"),
-        SHOW_CONTACT("Toon contactmomenten"),
-        SHOW_SECOND_CONTACT("Toon tweede contactmoment");
+    // This enum can be implemented based on your contacts
+        FIRST_CONTACT("First contacts"),
+        FIRST_CONTACT_SUCCESS("First contacts success"),
+        SECOND_CONTACT("Second contacts"),
+        SHOW_CONTACT("Show contacts"),
+        SHOW_SECOND_CONTACT("Show second contact");
 
 
     private final String contactMoment;

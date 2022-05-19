@@ -17,7 +17,7 @@ import org.openqa.selenium.WebDriver;
 
 import static aut.fbl.ContactMoment.SHOW_CONTACT;
 import static aut.menu.Items.BRIEFINGS;
-import static aut.menu.SubItems.OVERZICHT;
+import static aut.menu.SubItems.OVERVIEW;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AUT_FBL_TC003 {
@@ -49,7 +49,7 @@ public class AUT_FBL_TC003 {
         login.pageUrl();
         login.as(User.STANDARD_USER);
         topMenu.item(BRIEFINGS);
-        topMenu.subItem(OVERZICHT);
+        topMenu.subItem(OVERVIEW);
     }
 
     @When("delete contact moment")
