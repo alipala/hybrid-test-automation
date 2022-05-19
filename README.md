@@ -19,6 +19,7 @@ the important features are working and there are no showstoppers in the build th
 
 ## 2. Overview
 [Test Automation Overview](docs/overview.PNG)
+![Test Automation Overview](docs/overview.PNG)
 
 ## 3. Test Plan
 All details about the object, approach, features to be tested and more in [Test Plan](docs/test_plan.md)
