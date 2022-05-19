@@ -18,7 +18,6 @@ on each build to test apps' functionalities. In simple terms, we are verifying w
 the important features are working and there are no showstoppers in the build that is under testing.
 
 ## 2. Overview
-[Test Automation Overview](docs/overview.PNG)
 ![Test Automation Overview](docs/overview.PNG)
 
 ## 3. Test Plan
