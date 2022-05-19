@@ -10,9 +10,13 @@
 7. [Test Environment and Tech Stack](#7-test-environment-and-tech-stack)
 
 ## 1. Introduction
-This repository is a demonstration to show how I develop a hybrid framework. Used test automation patterns 
-for creating acceptance automated tests of an application for UI and backend.
-It cannot be built unless you adapt the environment and page objects. 
+This repository is a demonstration to show how I develop a hybrid framework. 
+It consists of POM pattern, Cucumber integration for putting BDD practice into it. 
+It can be tracked the Jira item directly from the tests with related Jira ticket annotation. 
+GitHub Runners used as a CI/CD. After tests completed, Serenity BDD creates fancy reports. 
+In addition to this, in case any failure tests occurs, the solution creates a Jira item automatically. 
+Finally Zephyr scale tests cases' status as Pass or Failed.
+Note: It cannot be built unless you adapt the environment and page objects. 
 It stores the smoke tests so that seeing the apps are good enough for the further testing. It consists of a minimal set of tests run 
 on each build to test apps' functionalities. In simple terms, we are verifying whether 
 the important features are working and there are no showstoppers in the build that is under testing.
