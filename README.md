@@ -2,7 +2,7 @@
 
 ## Table of Contents
 1. [Introduction](#1-introduction)
-2. [Test Plan](#2-overview)
+2. [Overview](#2-overview)
 3. [Test Plan](#3-test-plan)
 4. [How to run tests on local](#4-how-to-run-the-tests-on-local)
 5. [View the reports](#5-view-the-reports)
